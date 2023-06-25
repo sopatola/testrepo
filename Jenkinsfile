@@ -16,6 +16,12 @@ pipeline {
            }
         }
         
+        stage('Quality Gate') {
+            steps {
+                waitForQualityGate abortPipeline: true, credentialsId: 'sonar'
+            }
+        }
+        
         
         stage('Unit Test') {
             steps {
@@ -31,11 +37,7 @@ pipeline {
         
         stage('Deploy to Tomcat') {
             steps {
-                deploy adapters: [tomcat9(credentialsId: 'tomcat', 
-                path: '', 
-                url: 'http://13.59.144.10:8080')],
-                contextPath: 'mypath', 
-                war: '**/*.war'
+               echo 'Deploy to Tomcat'
             }
         }
         
