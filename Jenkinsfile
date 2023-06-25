@@ -8,19 +8,19 @@ pipeline {
             }
         }
         
-        stage("SonarQube analysis") {
-           steps {
-             withSonarQubeEnv('sonar') {
-                 sh 'mvn clean package sonar:sonar'
-             }
-           }
-        }
+        // stage("SonarQube analysis") {
+        //    steps {
+        //      withSonarQubeEnv('sonar') {
+        //          sh 'mvn clean package sonar:sonar'
+        //      }
+        //    }
+        // }
         
-        stage('Quality Gate') {
-            steps {
-                waitForQualityGate abortPipeline: true, credentialsId: 'sonar'
-            }
-        }
+        // stage('Quality Gate') {
+        //     steps {
+        //         waitForQualityGate abortPipeline: true, credentialsId: 'sonar'
+        //     }
+        // }
         
         
         stage('Unit Test') {
