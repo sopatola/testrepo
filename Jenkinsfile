@@ -34,7 +34,22 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
-        
+
+        stage('Deploy to Nexus') {
+            steps {
+               nexusArtifactUploader artifacts: [[artifactId: 'RegistrationApp',
+               classifier: '', file: 'target/RegistrationApp-1.3.war',
+               type: 'war']], 
+               credentialsId: 'nexus', 
+               groupId: 'com.example', 
+               nexusUrl: '18.219.150.6:8081', 
+               nexusVersion: 'nexus3', 
+               protocol: 'http', 
+               repository: 'my-repo',
+               version: '1.4'
+            }
+        }
+
         stage('Deploy to Tomcat') {
             steps {
                echo 'Deploy to Tomcat'
